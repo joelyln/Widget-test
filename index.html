@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Chaîne d'approvisionnement automatisée</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -68,8 +67,12 @@
       border-radius: 50%;
       flex-shrink: 0;
       overflow: hidden;
-      font-size: 40px;   /* flag-icons utilise em pour la taille */
-      line-height: 1;
+    }
+
+    .flag img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .supplier-info { flex: 1; min-width: 0; }
@@ -132,7 +135,7 @@
 
       <!-- Fournisseur A – Brésil -->
       <div class="supplier-row">
-        <div class="flag"><span class="fi fi-br fis"></span></div>
+        <div class="flag"><img src="BR - Brazil.svg" alt="Brésil"></div>
         <div class="supplier-info">
           <div class="supplier-name">Fournisseur A</div>
           <div class="supplier-country">Brésil</div>
@@ -142,7 +145,7 @@
 
       <!-- Fournisseur B – Indonésie -->
       <div class="supplier-row">
-        <div class="flag"><span class="fi fi-id fis"></span></div>
+        <div class="flag"><img src="ID - Indonesia.svg" alt="Indonésie"></div>
         <div class="supplier-info">
           <div class="supplier-name">Fournisseur B</div>
           <div class="supplier-country">Indonésie</div>
@@ -152,7 +155,7 @@
 
       <!-- Skeleton – Niger -->
       <div class="supplier-row skeleton">
-        <div class="flag"><span class="fi fi-ne fis"></span></div>
+        <div class="flag"><img src="NE - Niger.svg" alt="Niger"></div>
         <div class="supplier-info">
           <div class="skeleton-bar wide"></div>
           <div class="skeleton-bar narrow"></div>
@@ -161,7 +164,7 @@
 
       <!-- Skeleton – Malaisie -->
       <div class="supplier-row skeleton">
-        <div class="flag"><span class="fi fi-my fis"></span></div>
+        <div class="flag"><img src="MY - Malaysia.svg" alt="Malaisie"></div>
         <div class="supplier-info">
           <div class="skeleton-bar wide"></div>
           <div class="skeleton-bar narrow"></div>
