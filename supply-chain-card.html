@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chaîne d'approvisionnement automatisée</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #d0d0d0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* ── Widget 584×384 ─────────────────────────────────────── */
+    .widget {
+      width: 584px;
+      height: 430px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+
+      background-image: url('background.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ── Card ───────────────────────────────────────────────── */
+    .card {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      width: 295px;
+      background: #F9FBFA;
+      border: 1px solid #CFD1D2;
+      border-radius: 12px;
+      padding: 20px 16px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #031F18;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    /* ── Supplier row ───────────────────────────────────────── */
+    .supplier-row {
+      background: #F5F5F5;
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flag {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      font-size: 40px;   /* flag-icons utilise em pour la taille */
+      line-height: 1;
+    }
+
+    .supplier-info { flex: 1; min-width: 0; }
+
+    .supplier-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #031F18;
+    }
+
+    .supplier-country {
+      font-size: 12px;
+      color: #393D3F;
+      margin-top: 2px;
+    }
+
+    .verify-btn {
+      flex-shrink: 0;
+      background: #E6F6EA;
+      border: 1px solid rgba(38,165,81,0.5);
+      border-radius: 6px;
+      color: #26A551;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .verify-btn:hover { background: #cff0d8; }
+
+    /* ── Skeleton ───────────────────────────────────────────── */
+    .supplier-row.skeleton .supplier-info {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .skeleton-bar {
+      height: 11px;
+      background: #E0E0E0;
+      border-radius: 6px;
+      animation: shimmer 1.4s ease-in-out infinite;
+    }
+
+    .skeleton-bar.wide   { width: 72%; }
+    .skeleton-bar.narrow { width: 52%; }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.45; }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="card">
+      <h2 class="card-title">Chaîne d'approvisionnement automatisée</h2>
+
+      <!-- Fournisseur A – Brésil -->
+      <div class="supplier-row">
+        <div class="flag"><span class="fi fi-br fis"></span></div>
+        <div class="supplier-info">
+          <div class="supplier-name">Fournisseur A</div>
+          <div class="supplier-country">Brésil</div>
+        </div>
+        <button class="verify-btn">Vérifier</button>
+      </div>
+
+      <!-- Fournisseur B – Indonésie -->
+      <div class="supplier-row">
+        <div class="flag"><span class="fi fi-id fis"></span></div>
+        <div class="supplier-info">
+          <div class="supplier-name">Fournisseur B</div>
+          <div class="supplier-country">Indonésie</div>
+        </div>
+        <button class="verify-btn">Vérifier</button>
+      </div>
+
+      <!-- Skeleton – Niger -->
+      <div class="supplier-row skeleton">
+        <div class="flag"><span class="fi fi-ne fis"></span></div>
+        <div class="supplier-info">
+          <div class="skeleton-bar wide"></div>
+          <div class="skeleton-bar narrow"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton – Malaisie -->
+      <div class="supplier-row skeleton">
+        <div class="flag"><span class="fi fi-my fis"></span></div>
+        <div class="supplier-info">
+          <div class="skeleton-bar wide"></div>
+          <div class="skeleton-bar narrow"></div>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /widget -->
+</body>
+</html>
