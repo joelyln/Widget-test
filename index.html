@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Chaîne d'approvisionnement automatisée</title>
   <link rel="preload" href="background-forest.webp" as="image">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,16 +14,17 @@
       justify-content: center;
       min-height: 100vh;
       background: #d0d0d0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* ── Widget 584×430 ─────────────────────────────────────── */
+    /* ── Widget 584×384 ─────────────────────────────────────── */
     .widget {
       width: 584px;
       height: 384px;
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 16px;
+      background-color: #eff8ff;
       background-image: url('background-forest.webp');
       background-size: cover;
       background-position: center;
@@ -31,100 +33,139 @@
     /* ── Card ───────────────────────────────────────────────── */
     .card {
       position: absolute;
-      top: 32px;
-      left: 32px;
-      width: 295px;
-      background: #F9FBFA;
+      top: 50%;
+      left: 36.46px;
+      transform: translateY(-50%);
+      width: 266px;
+      background: #fff;
       border: 1px solid #CFD1D2;
       border-radius: 12px;
-      padding: 20px 16px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 14px;
+      overflow: hidden;
     }
 
     .card-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 600;
       color: #031F18;
-      line-height: 1.35;
-      margin-bottom: 2px;
+      line-height: normal;
     }
 
-    /* ── Supplier row ───────────────────────────────────────── */
+    /* ── Supplier list ──────────────────────────────────────── */
+    .supplier-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
     .supplier-row {
       background: #F5F5F5;
-      border-radius: 6px;
-      padding: 10px 12px;
+      border-radius: 4.906px;
+      padding: 9.812px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9.812px;
     }
 
+    .supplier-inner {
+      flex: 1 0 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      min-width: 0;
+    }
+
+    /* ── Flag ───────────────────────────────────────────────── */
     .flag {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
       overflow: hidden;
     }
 
-    .flag svg {
-      width: 100%;
-      height: 100%;
+    .flag svg { width: 100%; height: 100%; }
+
+    /* ── Supplier info ──────────────────────────────────────── */
+    .supplier-info {
+      flex: 1 0 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
     }
 
-    .supplier-info { flex: 1; min-width: 0; }
-
     .supplier-name {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 15.017px;
+      font-weight: 600;
       color: #031F18;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      line-height: normal;
     }
 
     .supplier-country {
       font-size: 12px;
+      font-weight: 500;
       color: #393D3F;
-      margin-top: 2px;
+      line-height: 1.35;
     }
 
+    /* ── Verify button ──────────────────────────────────────── */
     .verify-btn {
       flex-shrink: 0;
       background: #E6F6EA;
-      border: 1px solid rgba(38,165,81,0.5);
-      border-radius: 6px;
-      color: #26A551;
+      border: 1px solid rgba(38, 165, 81, 0.5);
+      border-radius: 4px;
+      color: rgba(0, 0, 0, 0.87);
+      font-family: inherit;
       font-size: 12px;
       font-weight: 500;
-      padding: 5px 12px;
+      padding: 4px 8px;
       cursor: pointer;
       white-space: nowrap;
+      letter-spacing: 0.18px;
       transition: background 0.15s;
     }
 
     .verify-btn:hover { background: #cff0d8; }
 
     /* ── Skeleton ───────────────────────────────────────────── */
-    .supplier-row.skeleton .supplier-info {
+    .skeleton-name-wrap {
+      height: 24px;
       display: flex;
-      flex-direction: column;
-      gap: 7px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .skeleton-country-wrap {
+      height: 16px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
     }
 
     .skeleton-bar {
-      height: 11px;
-      background: #E0E0E0;
-      border-radius: 6px;
-      will-change: opacity;
+      width: 100.836px;
+      height: 9.97px;
+      border-radius: 40px;
+      background: linear-gradient(90deg, #d9d9d9 25%, #ebebeb 50%, #d9d9d9 75%);
+      background-size: 200% 100%;
+      will-change: background-position;
       animation: shimmer 1.4s ease-in-out infinite;
     }
 
-    .skeleton-bar.wide   { width: 72%; }
-    .skeleton-bar.narrow { width: 52%; }
+    .skeleton-bar.narrow {
+      width: 85.574px;
+      height: 6.866px;
+    }
 
     @keyframes shimmer {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.45; }
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
   </style>
 </head>
@@ -133,87 +174,98 @@
     <div class="card">
       <h2 class="card-title">Chaîne d'approvisionnement automatisée</h2>
 
-      <!-- Fournisseur A – Brésil -->
-      <div class="supplier-row">
-        <div class="flag" role="img" aria-label="Brésil">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip-br)">
-              <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#6DA544"/>
-              <path d="M12.0009 4.69629L21.914 12.0006L12.0009 19.305L2.08789 12.0006L12.0009 4.69629Z" fill="#FFDA44"/>
-              <path d="M12.0001 16.174C14.3052 16.174 16.174 14.3052 16.174 12.0001C16.174 9.69489 14.3052 7.82617 12.0001 7.82617C9.69489 7.82617 7.82617 9.69489 7.82617 12.0001C7.82617 14.3052 9.69489 16.174 12.0001 16.174Z" fill="#F0F0F0"/>
-              <path d="M9.91373 11.7393C9.18792 11.7393 8.48747 11.8496 7.82812 12.0545C7.85733 14.3345 9.71376 16.174 12.0007 16.174C13.4148 16.174 14.6638 15.4701 15.4188 14.3943C14.127 12.7773 12.1395 11.7393 9.91373 11.7393Z" fill="#0052B4"/>
-              <path d="M16.0981 12.7998C16.1484 12.5408 16.1755 12.2737 16.1755 12.0001C16.1755 9.69485 14.3068 7.82617 12.0016 7.82617C10.2816 7.82617 8.80502 8.86684 8.16602 10.3527C8.73086 10.2356 9.31567 10.174 9.91469 10.174C12.3389 10.174 14.532 11.1817 16.0981 12.7998Z" fill="#0052B4"/>
-            </g>
-            <defs><clipPath id="clip-br"><rect width="24" height="24" fill="white"/></clipPath></defs>
-          </svg>
-        </div>
-        <div class="supplier-info">
-          <div class="supplier-name">Fournisseur A</div>
-          <div class="supplier-country">Brésil</div>
-        </div>
-        <button class="verify-btn">Vérifier</button>
-      </div>
+      <div class="supplier-list">
 
-      <!-- Fournisseur B – Indonésie -->
-      <div class="supplier-row">
-        <div class="flag" role="img" aria-label="Indonésie">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip-id)">
-              <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"/>
-              <path d="M0 12C0 5.37262 5.37262 0 12 0C18.6274 0 24 5.37262 24 12" fill="#A2001D"/>
-            </g>
-            <defs><clipPath id="clip-id"><rect width="24" height="24" fill="white"/></clipPath></defs>
-          </svg>
+        <!-- Fournisseur A – Brésil -->
+        <div class="supplier-row">
+          <div class="supplier-inner">
+            <div class="flag" role="img" aria-label="Brésil">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip-br)">
+                  <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#6DA544"/>
+                  <path d="M12.0009 4.69629L21.914 12.0006L12.0009 19.305L2.08789 12.0006L12.0009 4.69629Z" fill="#FFDA44"/>
+                  <path d="M12.0001 16.174C14.3052 16.174 16.174 14.3052 16.174 12.0001C16.174 9.69489 14.3052 7.82617 12.0001 7.82617C9.69489 7.82617 7.82617 9.69489 7.82617 12.0001C7.82617 14.3052 9.69489 16.174 12.0001 16.174Z" fill="#F0F0F0"/>
+                  <path d="M9.91373 11.7393C9.18792 11.7393 8.48747 11.8496 7.82812 12.0545C7.85733 14.3345 9.71376 16.174 12.0007 16.174C13.4148 16.174 14.6638 15.4701 15.4188 14.3943C14.127 12.7773 12.1395 11.7393 9.91373 11.7393Z" fill="#0052B4"/>
+                  <path d="M16.0981 12.7998C16.1484 12.5408 16.1755 12.2737 16.1755 12.0001C16.1755 9.69485 14.3068 7.82617 12.0016 7.82617C10.2816 7.82617 8.80502 8.86684 8.16602 10.3527C8.73086 10.2356 9.31567 10.174 9.91469 10.174C12.3389 10.174 14.532 11.1817 16.0981 12.7998Z" fill="#0052B4"/>
+                </g>
+                <defs><clipPath id="clip-br"><rect width="24" height="24" fill="white"/></clipPath></defs>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Fournisseur A</div>
+              <div class="supplier-country">Brésil</div>
+            </div>
+          </div>
+          <button class="verify-btn">Vérifier</button>
         </div>
-        <div class="supplier-info">
-          <div class="supplier-name">Fournisseur B</div>
-          <div class="supplier-country">Indonésie</div>
-        </div>
-        <button class="verify-btn">Vérifier</button>
-      </div>
 
-      <!-- Skeleton – Niger -->
-      <div class="supplier-row skeleton">
-        <div class="flag" role="img" aria-label="Niger">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip-ne)">
-              <path d="M1.19072 6.78177C0.427875 8.35939 0 10.1293 0 11.9991C0 13.869 0.427875 15.6389 1.19072 17.2165L12 18.26L22.8093 17.2165C23.5721 15.6389 24 13.869 24 11.9991C24 10.1293 23.5721 8.35939 22.8093 6.78177L12 5.73828L1.19072 6.78177Z" fill="#F0F0F0"/>
-              <path d="M1.19141 17.2188C3.13231 21.2327 7.24273 24.0014 12.0003 24.0014C16.7578 24.0014 20.8682 21.2327 22.8091 17.2188H1.19141Z" fill="#6DA544"/>
-              <path d="M1.19141 6.78262H22.8091C20.8682 2.76867 16.7578 0 12.0003 0C7.24278 0 3.13231 2.76867 1.19141 6.78262Z" fill="#FF9811"/>
-              <path d="M12.0001 16.1749C14.3052 16.1749 16.174 14.3062 16.174 12.001C16.174 9.69586 14.3052 7.82715 12.0001 7.82715C9.69489 7.82715 7.82617 9.69586 7.82617 12.001C7.82617 14.3062 9.69489 16.1749 12.0001 16.1749Z" fill="#FF9811"/>
-            </g>
-            <defs><clipPath id="clip-ne"><rect width="24" height="24" fill="white"/></clipPath></defs>
-          </svg>
+        <!-- Fournisseur B – Indonésie -->
+        <div class="supplier-row">
+          <div class="supplier-inner">
+            <div class="flag" role="img" aria-label="Indonésie">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip-id)">
+                  <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"/>
+                  <path d="M0 12C0 5.37262 5.37262 0 12 0C18.6274 0 24 5.37262 24 12" fill="#A2001D"/>
+                </g>
+                <defs><clipPath id="clip-id"><rect width="24" height="24" fill="white"/></clipPath></defs>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="supplier-name">Fournisseur B</div>
+              <div class="supplier-country">Indonésie</div>
+            </div>
+          </div>
+          <button class="verify-btn">Vérifier</button>
         </div>
-        <div class="supplier-info">
-          <div class="skeleton-bar wide"></div>
-          <div class="skeleton-bar narrow"></div>
-        </div>
-      </div>
 
-      <!-- Skeleton – Malaisie -->
-      <div class="supplier-row skeleton">
-        <div class="flag" role="img" aria-label="Malaisie">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip-my)">
-              <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"/>
-              <path d="M11.4785 12.0006H24.0002C24.0002 10.9174 23.8559 9.86827 23.5868 8.87012H11.4785V12.0006Z" fill="#D80027"/>
-              <path d="M11.4785 5.73885H22.239C21.5044 4.54016 20.5652 3.48065 19.4701 2.6084H11.4785V5.73885Z" fill="#D80027"/>
-              <path d="M12.0011 24.0003C14.8253 24.0003 17.4211 23.0242 19.471 21.3916H4.53125C6.58114 23.0242 9.17694 24.0003 12.0011 24.0003Z" fill="#D80027"/>
-              <path d="M1.76195 18.2603H22.2394C22.8291 17.2981 23.2864 16.2462 23.5873 15.1299H0.414062C0.714859 16.2462 1.17222 17.2981 1.76195 18.2603Z" fill="#D80027"/>
-              <path d="M12 12C12 5.37262 12 4.59131 12 0C5.37262 0 0 5.37262 0 12H12Z" fill="#0052B4"/>
-              <path d="M7.98099 10.2709C6.34214 10.2709 5.01361 8.94229 5.01361 7.30349C5.01361 5.6647 6.34219 4.33612 7.98099 4.33612C8.49197 4.33612 8.97277 4.46535 9.39254 4.69279C8.73403 4.04887 7.83347 3.65137 6.83967 3.65137C4.82269 3.65137 3.1875 5.28651 3.1875 7.30354C3.1875 9.32057 4.82269 10.9557 6.83967 10.9557C7.83347 10.9557 8.73403 10.5582 9.39254 9.91429C8.97277 10.1416 8.49202 10.2709 7.98099 10.2709Z" fill="#FFDA44"/>
-              <path d="M8.81842 5.21777L9.34525 6.31943L10.535 6.04455L10.0022 7.14326L10.959 7.90202L9.76773 8.17057L9.77106 9.39171L8.81842 8.62774L7.86573 9.39171L7.86902 8.17057L6.67773 7.90202L7.63455 7.14326L7.10172 6.04455L8.29155 6.31943L8.81842 5.21777Z" fill="#FFDA44"/>
-            </g>
-            <defs><clipPath id="clip-my"><rect width="24" height="24" fill="white"/></clipPath></defs>
-          </svg>
+        <!-- Skeleton – Niger -->
+        <div class="supplier-row">
+          <div class="supplier-inner">
+            <div class="flag" role="img" aria-label="Niger">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip-ne)">
+                  <path d="M1.19072 6.78177C0.427875 8.35939 0 10.1293 0 11.9991C0 13.869 0.427875 15.6389 1.19072 17.2165L12 18.26L22.8093 17.2165C23.5721 15.6389 24 13.869 24 11.9991C24 10.1293 23.5721 8.35939 22.8093 6.78177L12 5.73828L1.19072 6.78177Z" fill="#F0F0F0"/>
+                  <path d="M1.19141 17.2188C3.13231 21.2327 7.24273 24.0014 12.0003 24.0014C16.7578 24.0014 20.8682 21.2327 22.8091 17.2188H1.19141Z" fill="#6DA544"/>
+                  <path d="M1.19141 6.78262H22.8091C20.8682 2.76867 16.7578 0 12.0003 0C7.24278 0 3.13231 2.76867 1.19141 6.78262Z" fill="#FF9811"/>
+                  <path d="M12.0001 16.1749C14.3052 16.1749 16.174 14.3062 16.174 12.001C16.174 9.69586 14.3052 7.82715 12.0001 7.82715C9.69489 7.82715 7.82617 9.69586 7.82617 12.001C7.82617 14.3062 9.69489 16.1749 12.0001 16.1749Z" fill="#FF9811"/>
+                </g>
+                <defs><clipPath id="clip-ne"><rect width="24" height="24" fill="white"/></clipPath></defs>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="skeleton-name-wrap"><div class="skeleton-bar"></div></div>
+              <div class="skeleton-country-wrap"><div class="skeleton-bar narrow"></div></div>
+            </div>
+          </div>
         </div>
-        <div class="supplier-info">
-          <div class="skeleton-bar wide"></div>
-          <div class="skeleton-bar narrow"></div>
-        </div>
-      </div>
 
+        <!-- Skeleton – Malaisie -->
+        <div class="supplier-row">
+          <div class="supplier-inner">
+            <div class="flag" role="img" aria-label="Malaisie">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip-my)">
+                  <path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"/>
+                  <path d="M11.4785 12.0006H24.0002C24.0002 10.9174 23.8559 9.86827 23.5868 8.87012H11.4785V12.0006Z" fill="#D80027"/>
+                  <path d="M11.4785 5.73885H22.239C21.5044 4.54016 20.5652 3.48065 19.4701 2.6084H11.4785V5.73885Z" fill="#D80027"/>
+                  <path d="M12.0011 24.0003C14.8253 24.0003 17.4211 23.0242 19.471 21.3916H4.53125C6.58114 23.0242 9.17694 24.0003 12.0011 24.0003Z" fill="#D80027"/>
+                  <path d="M1.76195 18.2603H22.2394C22.8291 17.2981 23.2864 16.2462 23.5873 15.1299H0.414062C0.714859 16.2462 1.17222 17.2981 1.76195 18.2603Z" fill="#D80027"/>
+                  <path d="M12 12C12 5.37262 12 4.59131 12 0C5.37262 0 0 5.37262 0 12H12Z" fill="#0052B4"/>
+                  <path d="M7.98099 10.2709C6.34214 10.2709 5.01361 8.94229 5.01361 7.30349C5.01361 5.6647 6.34219 4.33612 7.98099 4.33612C8.49197 4.33612 8.97277 4.46535 9.39254 4.69279C8.73403 4.04887 7.83347 3.65137 6.83967 3.65137C4.82269 3.65137 3.1875 5.28651 3.1875 7.30354C3.1875 9.32057 4.82269 10.9557 6.83967 10.9557C7.83347 10.9557 8.73403 10.5582 9.39254 9.91429C8.97277 10.1416 8.49202 10.2709 7.98099 10.2709Z" fill="#FFDA44"/>
+                  <path d="M8.81842 5.21777L9.34525 6.31943L10.535 6.04455L10.0022 7.14326L10.959 7.90202L9.76773 8.17057L9.77106 9.39171L8.81842 8.62774L7.86573 9.39171L7.86902 8.17057L6.67773 7.90202L7.63455 7.14326L7.10172 6.04455L8.29155 6.31943L8.81842 5.21777Z" fill="#FFDA44"/>
+                </g>
+                <defs><clipPath id="clip-my"><rect width="24" height="24" fill="white"/></clipPath></defs>
+              </svg>
+            </div>
+            <div class="supplier-info">
+              <div class="skeleton-name-wrap"><div class="skeleton-bar"></div></div>
+              <div class="skeleton-country-wrap"><div class="skeleton-bar narrow"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /supplier-list -->
     </div><!-- /card -->
   </div><!-- /widget -->
 </body>
